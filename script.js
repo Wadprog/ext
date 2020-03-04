@@ -59,11 +59,17 @@ const run = () => {
 	}
 };
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	if (request.message === 'hello') {
-		const { url } = request;
-		alert(`Will moved to ${url}`);
-		location.replace(url);
-		run();
+	if (
+		document.domain === 'secure.helpscout.net' &&
+		location.href != 'https://secure.helpscout.net/search/' &&
+		location.href != 'https://secure.helpscout.net/?hsSearch=true'
+	) {
+		if (request.message === 'hello') {
+			const { url } = request;
+			alert(`Will moved to ${url}`);
+			location.replace(url);
+			run();
+		}
 	}
 });
 run();
